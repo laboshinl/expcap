@@ -5,7 +5,8 @@ defimpl String.Chars, for: ExPcap.PacketHeader do
   @spec to_string(ExPcap.PacketHeader.t) :: String.t
   def to_string(header) do
     """
-      ts sec:             #{header.ts_sec} (#{header.ts_sec |> DateTime.from_unix(:second) |> Timex.DateFormat.format!("{ISO}")})
+      ts sec:             #{header.ts_sec} (#{header.ts_sec |>   with {:ok, d} <- DateTime.from_unix(:second) do  DateTime.to_iso8601(d) end
+})
       ts usec:            #{header.ts_usec}
       incl len:           #{header.incl_len}
       orig len:           #{header.orig_len}
